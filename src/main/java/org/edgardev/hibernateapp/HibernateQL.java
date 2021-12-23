@@ -90,6 +90,15 @@ public class HibernateQL {
                 .getResultList();*/
         nombres = em.createQuery("select c.nombre || ' ' || c.apellido from Cliente  c", String.class)
                 .getResultList();
+
+        System.out.println("========== consulta con nombre y apellido concatenados mayúsculas ==========");
+        nombres = em.createQuery("select upper(concat(c.nombre, ' ', c.apellido)) from Cliente  c", String.class)
+                .getResultList();
+        nombres.forEach(System.out::println);
+
+        System.out.println("========== consulta con nombre y apellido concatenados minúsculas ==========");
+        nombres = em.createQuery("select lower(concat(c.nombre, ' ', c.apellido)) from Cliente  c", String.class)
+                .getResultList();
         nombres.forEach(System.out::println);
         em.close();
     }
