@@ -75,6 +75,15 @@ public class HibernateQL {
                 .getResultList();
         nombres.forEach(System.out::println);
 
+        System.out.println("========== consulta con formas de pago unicos ==========");
+        List<String> formasPago = em.createQuery("select distinct(c.formaPago) from Cliente  c", String.class)
+                .getResultList();
+        formasPago.forEach(System.out::println);
+
+        System.out.println("========== consulta con cantidad de formas de pago unicos ==========");
+        Long totalFormasPago = em.createQuery("select count(distinct(c.formaPago)) from Cliente  c", Long.class)
+                .getSingleResult();
+        System.out.println(totalFormasPago);
         em.close();
     }
 }
