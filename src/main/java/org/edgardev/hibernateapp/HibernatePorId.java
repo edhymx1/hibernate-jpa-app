@@ -16,6 +16,11 @@ public class HibernatePorId {
         Cliente cliente = em.find(Cliente.class, id);
         System.out.println(cliente);
 
+        // Cuando es la misma ID, guarda el obejeto en la sesión de JPA
+        // Y no vulve a buscar el mismo objeto
+        // Así se optimiza
+        Cliente cliente2 = em.find(Cliente.class, id);
+        System.out.println(cliente2);
         em.close();
     }
 }
