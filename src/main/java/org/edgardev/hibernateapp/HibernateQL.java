@@ -1,6 +1,7 @@
 package org.edgardev.hibernateapp;
 
 import jakarta.persistence.EntityManager;
+import org.edgardev.hibernateapp.dominio.ClienteDTO;
 import org.edgardev.hibernateapp.entity.Cliente;
 import org.edgardev.hibernateapp.util.JpaUtil;
 
@@ -44,6 +45,25 @@ public class HibernateQL {
             apellido = (String) registro[1];
             System.out.println("id=" + id + ", nombre=" + nombre + ", apellido=" + apellido);
         }
+
+        System.out.println("========== consulta cliente y forma de pago ==========");
+        registros = em.createQuery("select c, c.formaPago from Cliente c", Object[].class)
+                .getResultList();
+        registros.forEach(reg -> {
+            Cliente c = (Cliente) reg[0];
+            String formaPago = (String) reg[1];
+            System.out.println("formaPago=" + formaPago + "," + c);
+        });
+
+        System.out.println("========== consulta que puebla y devuelve objeto entity de una clase personalizada ==========");
+        clientes = em.createQuery("select new Cliente(c.nombre, c.apellido) from Cliente c", Cliente.class)
+                .getResultList();
+        clientes.forEach(System.out::println);
+
+        System.out.println("========== consulta que puebla y devuelve objeto DTO de una clase personalizada ==========");
+        List<ClienteDTO> clientesDTO = em.createQuery("select new org.edgardev.hibernateapp.dominio.ClienteDTO(c.nombre, c.apellido) from Cliente c", ClienteDTO.class)
+                .getResultList();
+        clientesDTO.forEach(System.out::println);
 
         em.close();
     }
