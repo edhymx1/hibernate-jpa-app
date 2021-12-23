@@ -66,7 +66,7 @@ public class HibernateQL {
         clientesDTO.forEach(System.out::println);
 
         System.out.println("========== consulta con nombre de clientes ==========");
-        List<String> nombres = em.createQuery("select c.nombre from  Cliente  c", String.class)
+        List<String> nombres = em.createQuery("select c.nombre from Cliente  c", String.class)
                 .getResultList();
         nombres.forEach(System.out::println);
 
@@ -84,6 +84,13 @@ public class HibernateQL {
         Long totalFormasPago = em.createQuery("select count(distinct(c.formaPago)) from Cliente  c", Long.class)
                 .getSingleResult();
         System.out.println(totalFormasPago);
+
+        System.out.println("========== consulta con nombre y apellido concatenados ==========");
+        /*nombres = em.createQuery("select concat(c.nombre, ' ', c.apellido) from Cliente  c", String.class)
+                .getResultList();*/
+        nombres = em.createQuery("select c.nombre || ' ' || c.apellido from Cliente  c", String.class)
+                .getResultList();
+        nombres.forEach(System.out::println);
         em.close();
     }
 }
