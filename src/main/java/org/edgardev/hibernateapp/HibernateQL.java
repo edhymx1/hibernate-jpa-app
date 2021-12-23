@@ -90,6 +90,7 @@ public class HibernateQL {
                 .getResultList();*/
         nombres = em.createQuery("select c.nombre || ' ' || c.apellido from Cliente  c", String.class)
                 .getResultList();
+        nombres.forEach(System.out::println);
 
         System.out.println("========== consulta con nombre y apellido concatenados mayúsculas ==========");
         nombres = em.createQuery("select upper(concat(c.nombre, ' ', c.apellido)) from Cliente  c", String.class)
@@ -100,6 +101,14 @@ public class HibernateQL {
         nombres = em.createQuery("select lower(concat(c.nombre, ' ', c.apellido)) from Cliente  c", String.class)
                 .getResultList();
         nombres.forEach(System.out::println);
+
+        System.out.println("========== consulta para buscar por nombre con like ==========");
+        clientes = em.createQuery("select c from Cliente c where c.nombre like :parametro", Cliente.class)
+                .setParameter("parametro", "%" + "en" + "%")
+                .getResultList();
+        clientes.forEach(System.out::println);
+
+
         em.close();
     }
 }
