@@ -65,6 +65,16 @@ public class HibernateQL {
                 .getResultList();
         clientesDTO.forEach(System.out::println);
 
+        System.out.println("========== consulta con nombre de clientes ==========");
+        List<String> nombres = em.createQuery("select c.nombre from  Cliente  c", String.class)
+                .getResultList();
+        nombres.forEach(System.out::println);
+
+        System.out.println("========== consulta con nombres unicos de clientes ==========");
+        nombres = em.createQuery("select distinct(c.nombre) from Cliente  c", String.class)
+                .getResultList();
+        nombres.forEach(System.out::println);
+
         em.close();
     }
 }
